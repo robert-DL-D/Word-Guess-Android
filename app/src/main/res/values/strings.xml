@@ -2,6 +2,6 @@
     <string name="app_name">Word Guess</string>
     <string name="enter">Enter</string>
     <string name="guess">Guess the 5 letter word!</string>
-    <string name="restart">Play Again</string>
+    <string name="play_again">Play Again</string>
     <string name="delete">Delete</string>
 </resources>

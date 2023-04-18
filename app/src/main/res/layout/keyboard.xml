@@ -14,8 +14,8 @@
             android:id="@+id/key_Q"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
-            android:layout_marginStart="@dimen/letter_buttons_padding"
+            android:padding="1sp"
+            android:layout_marginStart="2sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="Q"
             android:textSize="@dimen/button_text_size" />
@@ -24,7 +24,7 @@
             android:id="@+id/key_W"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="W"
             android:textSize="@dimen/button_text_size" />
@@ -33,7 +33,7 @@
             android:id="@+id/key_E"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="E"
             android:textSize="@dimen/button_text_size" />
@@ -42,7 +42,7 @@
             android:id="@+id/key_R"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="R"
             android:textSize="@dimen/button_text_size" />
@@ -51,7 +51,7 @@
             android:id="@+id/key_T"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="T"
             android:textSize="@dimen/button_text_size" />
@@ -60,7 +60,7 @@
             android:id="@+id/key_Y"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="Y"
             android:textSize="@dimen/button_text_size" />
@@ -69,7 +69,7 @@
             android:id="@+id/key_U"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="U"
             android:textSize="@dimen/button_text_size" />
@@ -78,7 +78,7 @@
             android:id="@+id/key_I"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="I"
             android:textSize="@dimen/button_text_size" />
@@ -87,7 +87,7 @@
             android:id="@+id/key_O"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="O"
             android:textSize="@dimen/button_text_size" />
@@ -96,7 +96,7 @@
             android:id="@+id/key_P"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:text="P"
             android:textSize="@dimen/button_text_size" />
 
@@ -112,7 +112,7 @@
             android:id="@+id/key_A"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginStart="@dimen/letter_buttons_padding"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="A"
@@ -122,7 +122,7 @@
             android:id="@+id/key_S"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="S"
             android:textSize="@dimen/button_text_size" />
@@ -131,7 +131,7 @@
             android:id="@+id/key_D"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="D"
             android:textSize="@dimen/button_text_size" />
@@ -140,7 +140,7 @@
             android:id="@+id/key_F"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="F"
             android:textSize="@dimen/button_text_size" />
@@ -149,7 +149,7 @@
             android:id="@+id/key_G"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="G"
             android:textSize="@dimen/button_text_size" />
@@ -158,7 +158,7 @@
             android:id="@+id/key_H"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="H"
             android:textSize="@dimen/button_text_size" />
@@ -167,7 +167,7 @@
             android:id="@+id/key_J"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="J"
             android:textSize="@dimen/button_text_size" />
@@ -176,7 +176,7 @@
             android:id="@+id/key_K"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="K"
             android:textSize="@dimen/button_text_size" />
@@ -185,7 +185,7 @@
             android:id="@+id/key_L"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:text="L"
             android:textSize="@dimen/button_text_size" />
 
@@ -202,7 +202,7 @@
             android:id="@+id/key_Z"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginStart="@dimen/letter_buttons_padding"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="Z"
@@ -212,7 +212,7 @@
             android:id="@+id/key_X"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="X"
             android:textSize="@dimen/button_text_size" />
@@ -221,7 +221,7 @@
             android:id="@+id/key_C"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="C"
             android:textSize="@dimen/button_text_size" />
@@ -230,7 +230,7 @@
             android:id="@+id/key_V"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="V"
             android:textSize="@dimen/button_text_size" />
@@ -239,7 +239,7 @@
             android:id="@+id/key_B"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="B"
             android:textSize="@dimen/button_text_size" />
@@ -248,7 +248,7 @@
             android:id="@+id/key_N"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="N"
             android:textSize="@dimen/button_text_size" />
@@ -257,7 +257,7 @@
             android:id="@+id/key_M"
             android:layout_width="@dimen/button_layout_width"
             android:layout_height="wrap_content"
-            android:padding="1dp"
+            android:padding="1sp"
             android:layout_marginEnd="@dimen/letter_buttons_padding"
             android:text="M"
             android:textSize="@dimen/button_text_size" />

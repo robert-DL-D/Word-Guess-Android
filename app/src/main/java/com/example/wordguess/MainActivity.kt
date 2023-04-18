@@ -1,21 +1,29 @@
 package com.example.wordguess
 
+import android.content.res.ColorStateList
+import android.content.res.Configuration
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.util.TypedValue
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 
+// TODO
+// local wifi multiplayer
+// word length choice
+// word list choice
 class MainActivity : AppCompatActivity() {
 
-    private var listOfArrayOfBoxes = mutableListOf<List<TextView>>()
-    private var listOfLetterButtons = mutableListOf<Button>()
+    private var listOfListOfBoxes = mutableListOf<List<TextView>>()
+    private var listOfButtons = mutableListOf<Button>()
     private var wordToGuess: String = ""
+    private var currentRowIndex = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,18 +36,14 @@ class MainActivity : AppCompatActivity() {
         val enterButton = findViewById<Button>(R.id.key_enter)
         val deleteButton = findViewById<Button>(R.id.key_delete)
         val correctWord = findViewById<TextView>(R.id.correct_word)
-        var setIndex = 0
 
         val words = mutableListOf<String>()
-        resources.openRawResource(R.raw.five_letter_words_from_englishstudyonline_org)
-            .bufferedReader().forEachLine { line ->
+        resources.openRawResource(R.raw.five_letter_words_from_englishstudyonline_org).bufferedReader().forEachLine { line ->
                 words.add(line)
             }
         wordToGuess = words.random().uppercase()
 
-        // FOR TEST
-        /*val words = arrayOf("legal", "rally", "learn", "aioli")
-        var wordToGuess = "LEARN"*/
+        updateMainLayoutBackground()
 
         for (i in 0 until letterBoxesLayout.childCount) {
             val setBoxes = mutableListOf<TextView>()
@@ -47,13 +51,8 @@ class MainActivity : AppCompatActivity() {
             for (j in 0 until childLayout.childCount) {
                 setBoxes.add(childLayout.getChildAt(j) as TextView)
             }
-            listOfArrayOfBoxes.add(setBoxes)
+            listOfListOfBoxes.add(setBoxes)
         }
-        /*letterBoxesLayout.forEach { childLayout ->
-            val setBoxes = mutableListOf<TextView>()
-            childLayout.forEach { setBoxes.add(it as TextView) }
-            listOfArrayOfBoxes.add(setBoxes)
-        }*/
 
         for (i in 0 until keyboardLayout.childCount) {
             rowLayouts.add(keyboardLayout.getChildAt(i) as LinearLayout)
@@ -61,9 +60,9 @@ class MainActivity : AppCompatActivity() {
         for (rowLayout in rowLayouts) {
             for (i in 0 until rowLayout.childCount) {
                 val button = rowLayout.getChildAt(i) as Button
-                listOfLetterButtons.add(button)
+                listOfButtons.add(button)
                 button.setOnClickListener {
-                    for (box in listOfArrayOfBoxes[setIndex]) {
+                    for (box in listOfListOfBoxes[currentRowIndex]) {
                         if (box.text.isEmpty()) {
                             box.text = button.text.toString()
                             return@setOnClickListener
@@ -72,10 +71,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        val defaultButtonBackground = listOfLetterButtons.first().backgroundTintList
 
         deleteButton.setOnClickListener {
-            val boxes = listOfArrayOfBoxes[setIndex]
+            val boxes = listOfListOfBoxes[currentRowIndex]
             for (i in boxes.indices.reversed()) {
                 val box = boxes[i]
                 if (box.text.isNotEmpty()) {
@@ -86,45 +84,36 @@ class MainActivity : AppCompatActivity() {
         }
 
         enterButton.setOnClickListener {
-            val boxes = listOfArrayOfBoxes[setIndex]
+            val boxes = listOfListOfBoxes[currentRowIndex]
             val guess = StringBuilder()
-
-            if (boxes.any { it.text.isEmpty() }) {
-                return@setOnClickListener
-            }
-
             for (box in boxes) {
                 guess.append(box.text.toString())
             }
 
-            if (!words.contains(guess.toString().lowercase())) {
-                val toast =
-                    Toast.makeText(applicationContext, "Not in word list", Toast.LENGTH_SHORT)
-                toast.show()
+            when {
+                boxes.any { it.text.isEmpty() } -> return@setOnClickListener
+                guess.toString().lowercase() !in words -> {
+                    val toast =
+                        Toast.makeText(applicationContext, "Not in word list", Toast.LENGTH_SHORT)
+                    toast.show()
+                    toast.view?.postDelayed({ toast.cancel() }, 3000)
+                }
 
-                Handler(Looper.getMainLooper()).postDelayed({
-                    toast.cancel()
-                }, 3000)
-
-            } else {
-                if (guess.toString() == wordToGuess) {
+                guess.toString() == wordToGuess -> {
                     for (i in guess.indices) {
                         val letterButton =
-                            listOfLetterButtons.find { it.text.toString() == guess[i].toString() }
-
-                        setBoxAndButtonBackgroundColor(
-                            boxes[i],
+                            listOfButtons.find { it.text.toString() == guess[i].toString() }
+                        setBoxAndButtonBackgroundColor(boxes[i],
                             letterButton,
                             R.drawable.green_box_background,
-                            R.color.green_button_background
-                        )
+                            R.color.green_button_background)
                     }
-
-                    playAgainButton.visibility = View.VISIBLE
+                    playAgainButton.isVisible = true
                     enterButton.isEnabled = false
                     deleteButton.isEnabled = false
+                }
 
-                } else {
+                else -> {
                     val highlightedLetters = mutableSetOf<Char>()
                     val correctLetters = mutableSetOf<Int>()
                     val incorrectLetters = mutableSetOf<Int>()
@@ -133,7 +122,7 @@ class MainActivity : AppCompatActivity() {
                     while (i < guess.length && i < wordToGuess.length) {
                         val letter = guess[i]
                         val letterButton =
-                            listOfLetterButtons.find { it.text.toString() == letter.toString() }
+                            listOfButtons.find { it.text.toString() == letter.toString() }
                         var boxBackgroundRes = R.drawable.grey_box_background
                         var buttonColorRes = R.color.grey_button_background
 
@@ -144,11 +133,11 @@ class MainActivity : AppCompatActivity() {
                             correctLetters.add(i)
                         } else if (wordToGuess.contains(letter)) {
                             val indexes =
-                                wordToGuess.indices.filter { j -> wordToGuess[j] == letter }
+                                wordToGuess.indices.filterIndexed { index, _ -> index !in correctLetters && index !in incorrectLetters }
                             val correctIndex =
-                                indexes.firstOrNull { j -> j !in correctLetters && j !in incorrectLetters && guess[j] != wordToGuess[j] }
+                                indexes.firstOrNull { index -> guess[index] != wordToGuess[index] && wordToGuess[index] == letter }
                             val incorrectIndex =
-                                indexes.firstOrNull { j -> j !in correctLetters && j !in incorrectLetters }
+                                indexes.firstOrNull { index -> wordToGuess[index] == letter }
 
                             if (correctIndex != null) {
                                 boxBackgroundRes = R.drawable.yellow_box_background
@@ -165,30 +154,24 @@ class MainActivity : AppCompatActivity() {
 
                         if (letterButton?.backgroundTintList?.defaultColor == ContextCompat.getColor(
                                 this,
-                                R.color.yellow_button_background
-                            ) && buttonColorRes != R.color.green_button_background
-                        ) {
+                                R.color.yellow_button_background) && buttonColorRes != R.color.green_button_background) {
                             buttonColorRes = R.color.yellow_button_background
                         } else if (letterButton?.backgroundTintList?.defaultColor == ContextCompat.getColor(
                                 this,
-                                R.color.green_button_background
-                            )
-                        ) {
+                                R.color.green_button_background)) {
                             buttonColorRes = R.color.green_button_background
                         }
 
-                        setBoxAndButtonBackgroundColor(
-                            boxes[i],
+                        setBoxAndButtonBackgroundColor(boxes[i],
                             letterButton,
                             boxBackgroundRes,
-                            buttonColorRes
-                        )
+                            buttonColorRes)
                         i++
                     }
 
-                    setIndex++
+                    currentRowIndex++
 
-                    if (setIndex == listOfArrayOfBoxes.size && guess.toString() != wordToGuess) {
+                    if (currentRowIndex == listOfListOfBoxes.size && guess.toString() != wordToGuess) {
                         playAgainButton.visibility = View.VISIBLE
                         enterButton.isEnabled = false
                         deleteButton.isEnabled = false
@@ -205,30 +188,49 @@ class MainActivity : AppCompatActivity() {
             deleteButton.isEnabled = true
             playAgainButton.visibility = View.INVISIBLE
             correctWord.visibility = View.INVISIBLE
-            setIndex = 0
+            currentRowIndex = 0
             wordToGuess = words.random().uppercase()
 
-            for (b in listOfArrayOfBoxes) {
-                for (box in b) {
+            for (listOfBoxes in listOfListOfBoxes) {
+                for (box in listOfBoxes) {
                     box.text = ""
                     box.setBackgroundResource(R.drawable.white_box_background)
                 }
             }
 
-            for (button in listOfLetterButtons) {
-                button.backgroundTintList = defaultButtonBackground
+            val typedValue = TypedValue()
+            this.theme.resolveAttribute(android.R.attr.colorPrimary, typedValue, true)
+            for (button in listOfButtons) {
+                button.backgroundTintList = ColorStateList.valueOf(typedValue.data)
             }
+
+        }
+    }
+
+    private fun updateMainLayoutBackground() {
+        val mainLayout = findViewById<ConstraintLayout>(R.id.main_layout)
+        if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
+            mainLayout.setBackgroundColor(ContextCompat.getColor(this,
+                androidx.cardview.R.color.cardview_dark_background))
+        } else {
+            mainLayout.setBackgroundColor(ContextCompat.getColor(this,
+                androidx.cardview.R.color.cardview_light_background))
         }
     }
 
     private fun setBoxAndButtonBackgroundColor(
-        currentBox: TextView,
-        letterButton: Button?,
-        boxBackground: Int,
-        buttonBackground: Int
-    ) {
+            currentBox: TextView,
+            letterButton: Button?,
+            boxBackground: Int,
+            buttonBackground: Int) {
         currentBox.setBackgroundResource(boxBackground)
         letterButton?.backgroundTintList = ContextCompat.getColorStateList(this, buttonBackground)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        updateMainLayoutBackground()
     }
 
 }
